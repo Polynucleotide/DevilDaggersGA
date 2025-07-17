@@ -1,15 +1,14 @@
 ﻿#include "Detector.hpp"
 #include "Constants.hpp"
+#include <iostream>
 #include <sstream>
 #include <iomanip>
 
 cv::dnn::Net Detector::net1;
 cv::dnn::Net Detector::net2;
-cv::Mat Detector::gameOverTemplate;
 
 void Detector::Init()
 {
-	gameOverTemplate = cv::imread("samples/score_submitted.png", cv::IMREAD_COLOR);
 	LoadDetectorModels();
 	AllocateSkullData();
 }
@@ -168,6 +167,15 @@ DXCam::Region Detector::ComputeGameRegion(HWND hwnd)
 	return { ul.x, ul.y, lr.x, lr.y };
 }
 
-void Detector::ComputeGameOverROI(DXCam::Region const& region)
+bool Detector::IsAgentDead(cv::Mat const& frame)
 {
+	// Check for red screen
+	cv::Mat frameHSV;
+	cv::cvtColor(frame, frameHSV, cv::COLOR_BGR2HSV);
+	cv::Mat redMask1, redMask2;
+	cv::inRange(frameHSV, cv::Scalar(0.0, 254.0, 12.0),  cv::Scalar(0.0, 255.0, 39.0), redMask1);
+	cv::inRange(frameHSV, cv::Scalar(0.0, 254.0, 124.0), cv::Scalar(0.0, 255.0, 125.0), redMask2);
+	cv::Mat redMask = redMask1 | redMask2;
+	float redPercentage = static_cast<float>(cv::countNonZero(redMask)) / static_cast<float>(redMask.total());
+	return redPercentage > Constants::GAME_OVER_RED_THRESHOLD;
 }

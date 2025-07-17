@@ -47,7 +47,6 @@ int main()
 	// Initialize templates
 	// Load .onnx models
 	Detector::Init();
-	cv::Mat const& gameOverTemplate = Detector::GetGetGameOverTemplate();
 
 	int frameCount = 0;
 	MSG msg{};
@@ -64,7 +63,6 @@ int main()
 				if (running)
 				{
 					DXCam::Region region = Detector::ComputeGameRegion(hwnd);
-					Detector::ComputeGameOverROI(region);
 					camera->start(region, Constants::CAPTURE_FRAMERATE, true);
 				}
 				else
@@ -84,16 +82,12 @@ int main()
 			cv::cvtColor(frameBGRA, frameBGR, cv::COLOR_BGRA2BGR);
 
 			// Check if agent is dead
-			cv::Mat roi = frameBGR(cv::Rect(0, 0, 500, 100));
-			cv::Mat result;
-			cv::matchTemplate(roi, gameOverTemplate, result, cv::TM_CCOEFF_NORMED);
-			double maxVal;
-			cv::minMaxLoc(result, nullptr, &maxVal);
-			if (maxVal > Constants::GAME_OVER_THRESHOLD)
+			if (Detector::IsAgentDead(frameBGR))
 			{
-				//InputSimulator::KeyPress('R');
+				InputSimulator::KeyPress('R');
 				continue;
 			}
+
 
 			//std::vector<cv::Point> skulls = Detector::DetectSkulls(frameBGR, SkullType::SKULL1);
 			//std::vector<cv::Point> skulls2 = Detector::DetectSkulls(frameBGR, SkullType::SKULL2);
@@ -105,7 +99,7 @@ int main()
 			std::string count = ss.str();
 
 			// Write frame
-			cv::imwrite("Frame" + count + ".jpg", frameBGR);
+			//cv::imwrite("Frame" + count + ".jpg", frameBGR);
 			++frameCount;
 #endif
 		}

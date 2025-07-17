@@ -19,14 +19,12 @@ class Detector
 		static void LoadDetectorModels();
 		static void AllocateSkullData();
 		static std::vector<cv::Point> DetectSkulls(cv::Mat& frame, SkullType skullType);
-		static cv::Mat const& GetGetGameOverTemplate() { return gameOverTemplate; };
 		static DXCam::Region ComputeGameRegion(HWND hwnd);
-		static void ComputeGameOverROI(DXCam::Region const& region);
+		static bool IsAgentDead(cv::Mat const& frame);
 
 	private:
 		static cv::dnn::Net net1;
 		static cv::dnn::Net net2;
-		static cv::Mat gameOverTemplate;
 		//static std::vector<SkullDetections>
 };
 
