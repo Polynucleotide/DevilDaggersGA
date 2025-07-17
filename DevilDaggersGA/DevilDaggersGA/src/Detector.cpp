@@ -165,5 +165,9 @@ DXCam::Region Detector::ComputeGameRegion(HWND hwnd)
 	ClientToScreen(hwnd, &ul);
 	ClientToScreen(hwnd, &lr);
 
-	return { ul.x, ul.y, lr.x, lr.y - 230 };
+	return { ul.x, ul.y, lr.x, lr.y };
+}
+
+void Detector::ComputeGameOverROI(DXCam::Region const& region)
+{
 }

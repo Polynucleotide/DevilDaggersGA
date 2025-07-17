@@ -51,8 +51,6 @@ int main()
 
 	int frameCount = 0;
 	MSG msg{};
-	float angle = 0.f;
-	bool fire = false;
 	std::shared_ptr<DXCam::DXCamera> camera = DXCam::create();
 	bool running = false;
 	while (true)
@@ -66,7 +64,7 @@ int main()
 				if (running)
 				{
 					DXCam::Region region = Detector::ComputeGameRegion(hwnd);
-					//Detector::ComputeGameOverROI(hwnd);
+					Detector::ComputeGameOverROI(region);
 					camera->start(region, Constants::CAPTURE_FRAMERATE, true);
 				}
 				else
@@ -93,40 +91,13 @@ int main()
 			cv::minMaxLoc(result, nullptr, &maxVal);
 			if (maxVal > Constants::GAME_OVER_THRESHOLD)
 			{
-				InputSimulator::KeyPress('R');
+				//InputSimulator::KeyPress('R');
 				continue;
 			}
 
-			std::vector<cv::Point> skulls = Detector::DetectSkulls(frameBGR, SkullType::SKULL1);
-			std::vector<cv::Point> skulls2 = Detector::DetectSkulls(frameBGR, SkullType::SKULL2);
+			//std::vector<cv::Point> skulls = Detector::DetectSkulls(frameBGR, SkullType::SKULL1);
+			//std::vector<cv::Point> skulls2 = Detector::DetectSkulls(frameBGR, SkullType::SKULL2);
 
-			if (skulls.size() > 0)
-			{
-				cv::Point screenCenter{ frameBGR.cols / 2, frameBGR.rows / 2 };
-				cv::Point vector = skulls[0] - screenCenter;
-				MoveMouseBy(vector.x * 0.4f, vector.y * 0.4f);
-				if (!fire)
-				{
-					InputSimulator::HoldLMB();
-					fire = true;
-				}
-			}
-			else if (skulls2.size() > 0)
-			{
-				cv::Point screenCenter{ frameBGR.cols / 2, frameBGR.rows / 2 };
-				cv::Point vector = skulls2[0] - screenCenter;
-				MoveMouseBy(vector.x * 0.4f, vector.y * 0.4f + 20.f);
-				if (!fire)
-				{
-					InputSimulator::HoldLMB();
-					fire = true;
-				}
-			}
-			else
-			{
-				angle += CV_PI / 10.f;
-				MoveMouseBy(100.f, sinf(angle) * 50.f);
-			}
 #if 1
 			// Set number
 			std::stringstream ss;

@@ -21,6 +21,7 @@ class Detector
 		static std::vector<cv::Point> DetectSkulls(cv::Mat& frame, SkullType skullType);
 		static cv::Mat const& GetGetGameOverTemplate() { return gameOverTemplate; };
 		static DXCam::Region ComputeGameRegion(HWND hwnd);
+		static void ComputeGameOverROI(DXCam::Region const& region);
 
 	private:
 		static cv::dnn::Net net1;

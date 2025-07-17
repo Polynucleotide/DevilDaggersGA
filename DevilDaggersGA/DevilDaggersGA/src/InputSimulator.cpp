@@ -21,7 +21,7 @@ void InputSimulator::Init()
     }
 
     // Find active mouse
-    for (int device = 11; device <= INTERCEPTION_MAX_MOUSE; ++device)
+    for (int device = 11; device <= INTERCEPTION_MAX_DEVICE; ++device)
     {
         if (interception_is_mouse(device) && !interception_is_invalid(device))
         {
@@ -70,12 +70,12 @@ void InputSimulator::HoldLMB()
         {
             // Simulate left button down
             stroke.state = INTERCEPTION_MOUSE_LEFT_BUTTON_DOWN;
-            interception_send(context, 12, (const InterceptionStroke*)&stroke, 1);
+            interception_send(context, mouse, (const InterceptionStroke*)&stroke, 1);
         }
         catch (const std::exception& e)
         {
             stroke.state = INTERCEPTION_MOUSE_LEFT_BUTTON_UP;
-            interception_send(context, 12, (const InterceptionStroke*)&stroke, 1);
+            interception_send(context, mouse, (const InterceptionStroke*)&stroke, 1);
         }
     }).detach();
 }
