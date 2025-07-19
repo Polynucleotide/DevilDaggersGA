@@ -85,8 +85,8 @@ void Agent::LookRight(int dx, int steps)
 
 void Agent::Shoot(cv::Point const& aimVector, int milliseconds)
 {
-	InputSimulator::MoveMouseLR(aimVector.x);
-	InputSimulator::MoveMouseUD(aimVector.y);
+	InputSimulator::MoveMouseLR(static_cast<int>(aimVector.x * 0.6f));
+	InputSimulator::MoveMouseUD(static_cast<int>(aimVector.y * 0.6f));
 	InputSimulator::HoldLMB(milliseconds);
 }
 
