@@ -27,6 +27,21 @@
     <ClCompile Include="src\InputSimulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Agent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GeneticAlgorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Skull.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\dxcam_export.h">
@@ -1136,7 +1151,7 @@
     <ClInclude Include="include\opencv2\core_detect.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\SkullDetections.hpp">
+    <ClInclude Include="include\Skull.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\tesseract\baseapi.h">
@@ -1290,6 +1305,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\interception\interception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GeneticAlgorithm.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Time.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SkullType.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

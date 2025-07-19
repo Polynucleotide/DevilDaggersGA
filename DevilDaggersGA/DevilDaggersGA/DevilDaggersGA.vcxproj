@@ -128,6 +128,9 @@
 xcopy "$(SolutionDir)models\*" "$(OutDir)models\" /s /r /y /q
 
 
+xcopy "$(SolutionDir)genomes\*" "$(OutDir)genomes\" /s /r /y /q
+
+
 xcopy "$(ProjectDir)bin\opencv_world4130d.dll" "$(OutDir)" /s /r /y /q
 
 
@@ -161,16 +164,25 @@ xcopy "$(ProjectDir)bin\interception.dll" "$(OutDir)" /s /r /y /q
 xcopy "$(SolutionDir)models\*" "$(OutDir)models\" /s /r /y /q
 
 
+xcopy "$(SolutionDir)genomes\*" "$(OutDir)genomes\" /s /r /y /q
+
+
 xcopy "$(ProjectDir)bin\opencv_world4130.dll" "$(OutDir)" /s /r /y /q
+
 
 
 xcopy "$(ProjectDir)bin\interception.dll" "$(OutDir)" /s /r /y /q</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Random.cpp" />
+    <ClCompile Include="src\Skull.cpp" />
+    <ClCompile Include="src\GeneticAlgorithm.cpp" />
+    <ClCompile Include="src\Agent.cpp" />
     <ClCompile Include="src\InputSimulator.cpp" />
     <ClCompile Include="src\Detector.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Time.cpp" />
     <ClCompile Include="src\Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +195,7 @@ xcopy "$(ProjectDir)bin\interception.dll" "$(OutDir)" /s /r /y /q</Command>
     <ClInclude Include="include\dxcam\DXCamera.h" />
     <ClInclude Include="include\dxcam_export.h" />
     <ClInclude Include="include\Detector.hpp" />
+    <ClInclude Include="include\GeneticAlgorithm.hpp" />
     <ClInclude Include="include\InputSimulator.hpp" />
     <ClInclude Include="include\interception\interception.h" />
     <ClInclude Include="include\leptonica\allheaders.h" />
@@ -581,7 +594,9 @@ xcopy "$(ProjectDir)bin\interception.dll" "$(OutDir)" /s /r /y /q</Command>
     <ClInclude Include="include\opencv2\world.hpp" />
     <ClInclude Include="include\opencv2\ximgproc.hpp" />
     <ClInclude Include="include\opencv2\xobjdetect.hpp" />
-    <ClInclude Include="include\SkullDetections.hpp" />
+    <ClInclude Include="include\Random.hpp" />
+    <ClInclude Include="include\Skull.hpp" />
+    <ClInclude Include="include\SkullType.hpp" />
     <ClInclude Include="include\tesseract\baseapi.h" />
     <ClInclude Include="include\tesseract\capi.h" />
     <ClInclude Include="include\tesseract\export.h" />
@@ -594,6 +609,7 @@ xcopy "$(ProjectDir)bin\interception.dll" "$(OutDir)" /s /r /y /q</Command>
     <ClInclude Include="include\tesseract\resultiterator.h" />
     <ClInclude Include="include\tesseract\unichar.h" />
     <ClInclude Include="include\tesseract\version.h" />
+    <ClInclude Include="include\Time.hpp" />
     <ClInclude Include="include\Utilities.hpp" />
   </ItemGroup>
   <ItemGroup>
