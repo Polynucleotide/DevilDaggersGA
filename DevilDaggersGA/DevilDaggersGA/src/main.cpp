@@ -21,23 +21,18 @@ int main()
 	if (!hwnd)
 	{
 		std::cerr << "Unable to find Devil Daggers\n";
+		std::cout << "Press Enter to exit...";
+		std::cin.ignore();
 		return 1;
 	}
 
 	if (!RegisterHotKey(nullptr, 1, MOD_CONTROL, 'P'))
 	{
 		std::cerr << "Failed to register hotkey\n";
+		std::cout << "Press Enter to exit...";
+		std::cin.ignore();
 		return 1;
 	}
-
-#if 0
-	cv::Mat frame = cv::imread("Frame075.jpg", cv::IMREAD_GRAYSCALE);
-	cv::GaussianBlur(frame, frame, cv::Size(3, 3), 0.8);
-	cv::Mat edge;
-	cv::Canny(frame, edge, 80, 240);
-	cv::imwrite("edge.jpg", edge);
-	cv::waitKey(0);
-#endif
 
 	// Create interception context
 	// Find active keyboard and mouse
@@ -60,11 +55,6 @@ int main()
 
 	std::shared_ptr<DXCam::DXCamera> camera = DXCam::create();
 	GeneticAlgorithm ga = GeneticAlgorithm(camera);
-
-#if 0
-	// Generate a random genome
-	std::vector<float> genome = ga.GenerateGenome();
-#endif
 
 	MSG msg{};
 	bool running = false;
