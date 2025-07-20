@@ -90,7 +90,7 @@ void Agent::Shoot(cv::Point const& aimVector, int milliseconds)
 	InputSimulator::HoldLMB(milliseconds);
 }
 
-void Agent::Scout()
+void Agent::Scout(int speed)
 {
 	scoutTimer -= Time::dt;
 	if (scoutTimer <= 0.f)
@@ -99,7 +99,7 @@ void Agent::Scout()
 			scoutClockwise = static_cast<bool>(Random::RandInt(0, 1));
 		isScouting = true;
 		int sign = scoutClockwise ? 1 : -1;
-		InputSimulator::MoveMouseLR(sign * 500);
+		InputSimulator::MoveMouseLR(sign * speed * 100);
 	}
 }
 

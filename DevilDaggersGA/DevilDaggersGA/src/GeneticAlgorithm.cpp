@@ -16,7 +16,8 @@
 #include "Random.hpp"
 
 GeneticAlgorithm::GeneticAlgorithm(std::shared_ptr<DXCam::DXCamera> _camera) :
-	camera{ _camera }, RESET_TIMER{ 4.f }, resetTimer{ RESET_TIMER }
+	camera{ _camera }, RESET_TIMER{ 4.f }, resetTimer{ RESET_TIMER },
+	MIN_WEIGHT{ -5.f }, MAX_WEIGHT{ 5.f }
 {
 	using namespace Constants;
 
@@ -64,9 +65,9 @@ bool GeneticAlgorithm::RunGeneration(Agent& agent)
 		skulls.push_back(std::move(skull));
 	}
 	std::sort(std::begin(skulls), std::end(skulls), [](const Skull& a, const Skull& b) {
+		if (a.skullType != b.skullType)
+			return a.skullType < b.skullType; // Skull 1 first
 		return a.area > b.area; // Largest first
-		//if (a.skullType != b.skullType)
-		//	return a.skullType < b.skullType; // Skull 1 first
 	});
 
 	std::vector<float> input = GetInputVector(agent);
@@ -99,7 +100,9 @@ bool GeneticAlgorithm::RunGeneration(Agent& agent)
 		}
 		agent.Shoot(aimVector);
 	}
-	else if (output[lookUp] > 2.f) // Look parallel to the ground if staring on the sky or floor
+
+	// Look parallel to the ground if staring on the sky or floor
+	else if (output[lookUp] > 2.f)
 	{
 		float dy = std::abs(InputSimulator::GetUpAngle());
 		agent.LookUp(static_cast<int>(dy * InputSimulator::MAX_UP_ANGLE));
@@ -113,7 +116,7 @@ bool GeneticAlgorithm::RunGeneration(Agent& agent)
 	// Scout
 	if (output[scout] > 0.f)
 	{
-		agent.Scout();
+		agent.Scout(static_cast<int>(output[scout]));
 	}
 	else
 	{
@@ -123,14 +126,14 @@ bool GeneticAlgorithm::RunGeneration(Agent& agent)
 	// Movement
 	if (output[moveFront] > output[moveBack])
 	{
-		if (output[moveFront] > 3.f)
+		if (output[moveFront] > 5.f)
 		{
 			agent.MoveFront(500);
 		}
 	}
 	else
 	{
-		if (output[moveBack] > 3.f)
+		if (output[moveBack] > 5.f)
 		{
 			agent.MoveBack(500);
 		}
@@ -138,20 +141,20 @@ bool GeneticAlgorithm::RunGeneration(Agent& agent)
 
 	if (output[moveLeft] > output[moveRight])
 	{
-		if (output[moveLeft] > 3.f)
+		if (output[moveLeft] > 5.f)
 		{
 			agent.MoveLeft(500);
 		}
 	}
 	else
 	{
-		if (output[moveRight] > 3.f)
+		if (output[moveRight] > 5.f)
 		{
 			agent.MoveRight(500);
 		}
 	}
 
-	if (output[jump] > 3.f)
+	if (output[jump] > 5.f)
 	{
 		agent.Jump();
 	}
@@ -166,7 +169,10 @@ void GeneticAlgorithm::MutateAgent(Agent& agent)
 	for (float& gene : agent.genome)
 	{
 		if (Random::RandFloat(0.0f, 1.0f) <= 0.1f) // 10% chance per gene
+		{
 			gene += Random::RandFloat(-0.5f, 0.5f);
+			gene = std::clamp(gene, MIN_WEIGHT, MAX_WEIGHT);
+		}
 	}
 	SaveGenome(agent);
 }
@@ -204,7 +210,7 @@ std::vector<float> GeneticAlgorithm::GenerateGenome()
 	std::vector<float> genome;
 	int size = NUM_ACTIONS * NUM_STATES;
 	for (int i = 0; i < size; ++i)
-		genome.push_back(Random::RandFloat(-5, 5));
+		genome.push_back(Random::RandFloat(MIN_WEIGHT, MAX_WEIGHT));
 
 #if 0
 	// Print genome

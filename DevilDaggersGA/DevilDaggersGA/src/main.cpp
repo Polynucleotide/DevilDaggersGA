@@ -21,7 +21,7 @@ int main()
 	if (!hwnd)
 	{
 		std::cerr << "Unable to find Devil Daggers\n";
-		//return 1;
+		return 1;
 	}
 
 	if (!RegisterHotKey(nullptr, 1, MOD_CONTROL, 'P'))

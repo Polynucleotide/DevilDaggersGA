@@ -32,6 +32,8 @@ class GeneticAlgorithm
 		std::shared_ptr<DXCam::DXCamera> camera;
 		int NUM_STATES;
 		int NUM_ACTIONS;
+		float const MIN_WEIGHT;
+		float const MAX_WEIGHT;
 		float const RESET_TIMER;
 		float resetTimer;
 };

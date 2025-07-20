@@ -23,7 +23,7 @@ class Agent
 		void LookLeft(int dx, int steps = 20);
 		void LookRight(int dx, int steps = 20);
 		void Shoot(cv::Point const& aimVector, int milliseconds = 1000);
-		void Scout();
+		void Scout(int speed);
 		void StopScout();
 		void Jump();
 		std::string genomeFilename;
