@@ -11,14 +11,10 @@ Genetic Algorithm learns how to play Devil Daggers in C++ with OpenCV.
 4. Genetic Algorithm receives the data and makes a decision
 5. Repeat from Step 1 at 60 FPS
 
----
-
 ## Important Notice - Interception Driver  
 The Interception driver operates at a low level in the operating system (kernel level).  
 While generally stable, installing or configuring it incorrectly may lead to system instability or unresponsiveness on some machines.  
 **Please proceed with caution and ensure you have a recovery plan.**
-
----
 
 ## Prerequisites
 - Windows OS
