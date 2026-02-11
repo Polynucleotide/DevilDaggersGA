@@ -44,3 +44,8 @@ While generally stable, installing or configuring it incorrectly may lead to sys
 4. Devil Daggers must run in windowed mode  
 5. Play the game  
 6. Press Ctrl + P to toggle the Genetic Algorithm on/off  
+
+## Note
+The program determines the capture region when the Genetic Algorithm is toggled on.  
+If you move the game window afterward, DXCam will continue capturing the original region, resulting in incorrect input.  
+Make sure the game window is in the desired position before enabling the Genetic Algorithm, or toggle it off and on again.
